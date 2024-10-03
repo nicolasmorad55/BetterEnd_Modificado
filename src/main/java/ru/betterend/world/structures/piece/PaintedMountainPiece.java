@@ -8,7 +8,6 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -25,8 +24,6 @@ import java.util.Random;
 public class PaintedMountainPiece extends MountainPiece {
 	private BlockState[] slises;
 	
-	public PaintedMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome, BlockState[] slises) {
-		super(EndStructures.PAINTED_MOUNTAIN_PIECE, center, radius, height, random, biome);
 		this.slises = slises;
 	}
 	

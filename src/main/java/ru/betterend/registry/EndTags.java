@@ -9,7 +9,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
@@ -31,7 +30,6 @@ import ru.betterend.BetterEnd;
 import ru.betterend.blocks.basis.EndTerrainBlock;
 import ru.betterend.blocks.basis.PedestalBlock;
 import ru.betterend.item.tool.EndHammerItem;
-import ru.betterend.world.biome.EndBiome;
 
 import java.util.List;
 
@@ -139,17 +137,11 @@ public class EndTags {
 		TagAPI.addBlockTag(NamedCommonBlockTags.END_STONES, bl);
 	}
 	
-	public static void addBiomeSurfaceToEndGroup(EndBiome b){
 		addEndGround(b.getTopMaterial().getBlock());
 		addEndGround(b.getAltTopMaterial().getBlock());
 		addEndGround(b.getUnderMaterial().getBlock());
 	}
 	
-	// TODO make getter for biome top blocks
-	public static void addTerrainTags(Registry<Biome> biomeRegistry) {
-		/*biomeRegistry.forEach((biome) -> {
-			if (biome.getBiomeCategory() == BiomeCategory.THEEND) {
-				SurfaceBuilderConfiguration config = biome.getGenerationSettings().getSurfaceBuilderConfig();
 				Block under = config.getUnderMaterial().getBlock();
 				Block surface = config.getTopMaterial().getBlock();
 				TagAPI.addTag(CommonBlockTags.GEN_END_STONES, under, surface);

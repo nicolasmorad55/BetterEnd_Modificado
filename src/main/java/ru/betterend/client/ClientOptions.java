@@ -5,13 +5,11 @@ import ru.betterend.config.Configs;
 public class ClientOptions {
 	private static boolean customSky;
 	private static boolean useFogDensity;
-	private static boolean blendBiomeMusic;
 	private static boolean sulfurWaterColor;
 	
 	public static void init() {
 		customSky = Configs.CLENT_CONFIG.getBooleanRoot("customSky", true);
 		useFogDensity = Configs.CLENT_CONFIG.getBooleanRoot("useFogDensity", true);
-		blendBiomeMusic = Configs.CLENT_CONFIG.getBooleanRoot("blendBiomeMusic", true);
 		sulfurWaterColor = Configs.CLENT_CONFIG.getBooleanRoot("sulfurWaterColor", true);
 		Configs.CLENT_CONFIG.saveChanges();
 	}
@@ -32,12 +30,8 @@ public class ClientOptions {
 		ClientOptions.useFogDensity = useFogDensity;
 	}
 	
-	public static boolean blendBiomeMusic() {
-		return blendBiomeMusic;
 	}
 	
-	public static void setBlendBiomeMusic(boolean blendBiomeMusic) {
-		ClientOptions.blendBiomeMusic = blendBiomeMusic;
 	}
 	
 	public static boolean useSulfurWaterColor() {

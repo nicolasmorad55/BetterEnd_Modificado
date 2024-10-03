@@ -22,7 +22,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import ru.bclib.api.biomes.BiomeAPI;
 import ru.betterend.BetterEnd;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.world.generator.GeneratorOptions;
@@ -48,14 +47,12 @@ public abstract class ServerLevelMixin extends Level {
 //
 //		be_lastWorld = session.getLevelId();
 //		//ServerLevel world = ServerLevel.class.cast(this);
-//		//EndBiomes.onWorldLoad(world.getSeed(), world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY));
 //	}
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void be_onServerWorldInit(MinecraftServer minecraftServer, Executor executor, LevelStorageAccess levelStorageAccess, ServerLevelData serverLevelData, ResourceKey<Level> resourceKey, DimensionType dimensionType, ChunkProgressListener chunkProgressListener, ChunkGenerator chunkGenerator, boolean bl, long seed, List<CustomSpawner> list, boolean bl2, CallbackInfo ci) {
 		ServerLevel level = ServerLevel.class.cast(this);
 		if (level.dimension() == Level.END) {
-			TerrainGenerator.initNoise(seed, chunkGenerator.getBiomeSource(), chunkGenerator.climateSampler());
 		}
 	}
 	
@@ -92,8 +89,6 @@ public abstract class ServerLevelMixin extends Level {
 	@ModifyArg(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"))
 	private BlockState be_modifyTickState(BlockPos pos, BlockState state) {
 		if (state.is(Blocks.ICE)) {
-			ResourceLocation biome = BiomeAPI.getBiomeID(getBiome(pos));
-			if (biome.getNamespace().equals(BetterEnd.MOD_ID)) {
 				state = EndBlocks.EMERALD_ICE.defaultBlockState();
 			}
 		}

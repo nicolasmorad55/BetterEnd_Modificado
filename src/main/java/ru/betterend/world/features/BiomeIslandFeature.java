@@ -3,7 +3,6 @@ package ru.betterend.world.features;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -15,9 +14,7 @@ import ru.bclib.sdf.primitive.SDFCappedCone;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.world.biome.EndBiome;
 
-public class BiomeIslandFeature extends DefaultFeature {
 	private static final MutableBlockPos CENTER = new MutableBlockPos();
 	private static final SDF ISLAND;
 	
@@ -29,17 +26,14 @@ public class BiomeIslandFeature extends DefaultFeature {
 	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featureConfig) {
 		final BlockPos pos = featureConfig.origin();
 		final WorldGenLevel world = featureConfig.level();
-		Biome biome = world.getBiome(pos);
 		int dist = BlocksHelper.downRay(world, pos, 10) + 1;
 		BlockPos surfacePos = new BlockPos(pos.getX(), pos.getY()-dist, pos.getZ());
-		BlockState topMaterial = EndBiome.findTopMaterial(world, surfacePos);;
 
 		if (BlocksHelper.isFluid(topMaterial)) {
 			topBlock = Blocks.GRAVEL.defaultBlockState();
 			underBlock = Blocks.STONE.defaultBlockState();
 		}
 		else {
-			underBlock = EndBiome.findUnderMaterial(world, surfacePos);
 		}
 
 		simplexNoise = new OpenSimplexNoise(world.getSeed());

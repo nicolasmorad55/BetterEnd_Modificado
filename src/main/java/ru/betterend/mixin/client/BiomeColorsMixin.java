@@ -2,7 +2,6 @@ package ru.betterend.mixin.client;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -19,8 +18,6 @@ import java.awt.Point;
 import java.util.Arrays;
 import java.util.Comparator;
 
-@Mixin(BiomeColors.class)
-public class BiomeColorsMixin {
 	private static final int POISON_COLOR = ColorUtil.color(92, 160, 78);
 	private static final int STREAM_COLOR = ColorUtil.color(105, 213, 244);
 	private static final Point[] OFFSETS;

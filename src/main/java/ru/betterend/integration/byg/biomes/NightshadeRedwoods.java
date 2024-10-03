@@ -1,32 +1,22 @@
-package ru.betterend.integration.byg.biomes;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeSpecialEffects;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import ru.bclib.BCLib;
-import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.world.biome.EndBiome;
 
 import java.util.List;
 
-public class NightshadeRedwoods extends EndBiome.Config {
 	public NightshadeRedwoods() {
 		super("nightshade_redwoods");
 	}
 
 	@Override
-	protected void addCustomBuildData(BCLBiomeBuilder builder) {
-		Biome biome = Integrations.BYG.getBiome("nightshade_forest");
-		BiomeSpecialEffects effects = biome.getSpecialEffects();
 
 		builder.fogColor(140, 108, 47)
 			   .fogDensity(1.5F)
@@ -37,7 +27,6 @@ public class NightshadeRedwoods extends EndBiome.Config {
 					   0.002F
 			   )
 			   //TODO: 1.18 surface rules
-//			  .setSurface(biome.getGenerationSettings()
 //							   .getSurfaceBuilder()
 //							   .get())
 			   .grassColor(48, 13, 89)
@@ -64,7 +53,6 @@ public class NightshadeRedwoods extends EndBiome.Config {
 				   .additions(additions)
 				   .mood(mood);
 		}
-		biome.getGenerationSettings()
 			 .features()
 			 .forEach((list) -> {
 				 list.forEach((feature) -> {
@@ -73,7 +61,6 @@ public class NightshadeRedwoods extends EndBiome.Config {
 			 });
 
 		for (MobCategory group : MobCategory.values()) {
-			List<SpawnerData> list = biome.getMobSettings()
 										  .getMobs(group)
 										  .unwrap();
 			list.forEach((entry) -> {

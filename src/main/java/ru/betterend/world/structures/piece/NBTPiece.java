@@ -19,7 +19,6 @@ import ru.bclib.util.MHelper;
 import ru.bclib.util.StructureHelper;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.util.StructureErode;
-import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
 
@@ -89,7 +88,6 @@ public class NBTPiece extends BasePiece {
 			StructureErode.erode(world, bounds, erosion, random);
 		}
 		if (cover) {
-			StructureErode.cover(world, bounds, random, EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial());
 		}
 	}
 	

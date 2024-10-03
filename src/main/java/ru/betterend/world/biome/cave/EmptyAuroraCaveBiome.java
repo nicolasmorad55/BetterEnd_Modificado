@@ -1,17 +1,8 @@
-package ru.betterend.world.biome.cave;
 
 import net.minecraft.resources.ResourceLocation;
-import ru.bclib.api.biomes.BCLBiomeBuilder;
-import ru.bclib.api.biomes.BCLBiomeBuilder.BiomeSupplier;
-import ru.bclib.world.biomes.BCLBiomeSettings;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
-import ru.betterend.world.biome.EndBiome;
 
-public class EmptyAuroraCaveBiome extends EndCaveBiome.Config {
-	public static class Biome extends EndCaveBiome {
-		public Biome(ResourceLocation biomeID, net.minecraft.world.level.biome.Biome biome, BCLBiomeSettings settings) {
-			super(biomeID, biome, settings);
 
 			this.addFloorFeature(EndFeatures.BIG_AURORA_CRYSTAL, 1);
 
@@ -29,12 +20,10 @@ public class EmptyAuroraCaveBiome extends EndCaveBiome.Config {
 		}
 	}
 
-	public EmptyAuroraCaveBiome() {
 		super("empty_aurora_cave");
 	}
 
 	@Override
-	protected void addCustomBuildData(BCLBiomeBuilder builder) {
 		super.addCustomBuildData(builder);
 		builder.fogColor(150, 30, 68)
 			   .fogDensity(2.0F)
@@ -44,7 +33,5 @@ public class EmptyAuroraCaveBiome extends EndCaveBiome.Config {
 	}
 
 	@Override
-	public BiomeSupplier<EndBiome> getSupplier() {
-		return EmptyAuroraCaveBiome.Biome::new;
 	}
 }

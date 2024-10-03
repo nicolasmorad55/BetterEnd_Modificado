@@ -22,7 +22,6 @@ public abstract class FeatureBaseStructure extends StructureFeature<NoneFeatureC
 	}
 
 	protected static boolean checkLocation(PieceGeneratorSupplier.Context<NoneFeatureConfiguration> context) {
-		return getGenerationHeight(context.chunkPos(), context.chunkGenerator(), context.heightAccessor()) >= 20 && BCLStructureFeature.isValidBiome(context);
 	}
 	
 	private static int getGenerationHeight(ChunkPos chunkPos, ChunkGenerator chunkGenerator, LevelHeightAccessor levelHeightAccessor) {

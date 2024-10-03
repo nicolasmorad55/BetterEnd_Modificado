@@ -7,7 +7,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -16,22 +15,17 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
-import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.MHelper;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
 import ru.betterend.util.GlobalState;
-import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
 
 public class CrystalMountainPiece extends MountainPiece {
 	private BlockState top;
 	
-	public CrystalMountainPiece(BlockPos center, float radius, float height, Random random, Biome biome) {
-		super(EndStructures.MOUNTAIN_PIECE, center, radius, height, random, biome);
-		top = EndBiome.findTopMaterial(biome); //biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 	
 	public CrystalMountainPiece(StructurePieceSerializationContext type, CompoundTag tag) {
@@ -41,7 +35,6 @@ public class CrystalMountainPiece extends MountainPiece {
 	@Override
 	protected void fromNbt(CompoundTag tag) {
 		super.fromNbt(tag);
-		top = EndBiome.findTopMaterial(BiomeAPI.getBiome(biomeID)); //BiomeAPI.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 	}
 	
 	@Override

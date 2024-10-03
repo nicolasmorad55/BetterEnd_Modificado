@@ -1,22 +1,16 @@
-package ru.betterend.world.biome.land;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.bclib.interfaces.SurfaceMaterialProvider;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndSounds;
-import ru.betterend.world.biome.EndBiome;
 
-public class LanternWoodsBiome extends EndBiome.Config {
-	public LanternWoodsBiome() {
 		super("lantern_woods");
 	}
 
 	@Override
-	protected void addCustomBuildData(BCLBiomeBuilder builder) {
 		builder
 			.fogColor(189, 82, 70)
 			.fogDensity(1.1F)
@@ -44,7 +38,6 @@ public class LanternWoodsBiome extends EndBiome.Config {
 
 	@Override
 	protected SurfaceMaterialProvider surfaceMaterial() {
-		return new EndBiome.DefaultSurfaceMaterialProvider() {
 			@Override
 			public BlockState getTopMaterial() {
 				return EndBlocks.RUTISCUS.defaultBlockState();

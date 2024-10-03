@@ -31,7 +31,6 @@ public class EternalPortalStructure extends FeatureBaseStructure {
 	}
 
 	protected static boolean checkLocation(PieceGeneratorSupplier.Context<NoneFeatureConfiguration> context) {
-		if (!BCLStructureFeature.isValidBiome(context)) return false;
 
 		final ChunkPos chunkPos = context.chunkPos();
 		final ChunkGenerator chunkGenerator = context.chunkGenerator();

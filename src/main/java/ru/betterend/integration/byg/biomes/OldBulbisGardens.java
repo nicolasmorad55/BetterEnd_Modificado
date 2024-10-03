@@ -1,4 +1,3 @@
-package ru.betterend.integration.byg.biomes;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
@@ -8,36 +7,26 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeSpecialEffects;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import ru.bclib.BCLib;
-import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.betterend.BetterEnd;
 import ru.betterend.integration.Integrations;
 import ru.betterend.integration.byg.features.BYGFeatures;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.world.biome.EndBiome;
 
 import java.util.List;
 import java.util.function.Supplier;
 
 
-public class OldBulbisGardens extends EndBiome.Config {
 	public OldBulbisGardens() {
 		super("old_bulbis_gardens");
 	}
 
 	@Override
-	protected void addCustomBuildData(BCLBiomeBuilder builder) {
-		Biome biome = Integrations.BYG.getBiome("bulbis_gardens");
-		BiomeSpecialEffects effects = biome.getSpecialEffects();
 
 		Block ivis = Integrations.BYG.getBlock("ivis_phylium");
-//		Block origin = biome.getGenerationSettings()
 //							.getSurfaceBuilderConfig()
 //							.getTopMaterial()
 //							.getBlock();
@@ -73,7 +62,6 @@ public class OldBulbisGardens extends EndBiome.Config {
 		}
 
 		for (MobCategory group : MobCategory.values()) {
-			List<SpawnerData> list = biome.getMobSettings()
 										  .getMobs(group)
 										  .unwrap();
 			list.forEach((entry) -> {
@@ -81,7 +69,6 @@ public class OldBulbisGardens extends EndBiome.Config {
 			});
 		}
 
-		List<List<Supplier<PlacedFeature>>> features = biome.getGenerationSettings()
 															.features();
 		List<Supplier<PlacedFeature>> vegetal = features.get(Decoration.VEGETAL_DECORATION.ordinal());
 		if (vegetal.size() > 2) {

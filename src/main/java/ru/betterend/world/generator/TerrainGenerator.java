@@ -3,11 +3,7 @@ package ru.betterend.world.generator;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.biome.BiomeSource;
-import net.minecraft.world.level.biome.Climate.Sampler;
-import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.MHelper;
-import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.noise.OpenSimplexNoise;
 
 import java.awt.Point;
@@ -30,10 +26,8 @@ public class TerrainGenerator {
 	private static IslandLayer smallIslands;
 	private static OpenSimplexNoise noise1;
 	private static OpenSimplexNoise noise2;
-	private static BiomeSource biomeSource;
 	private static Sampler sampler;
 	
-	public static void initNoise(long seed, BiomeSource biomeSource, Sampler sampler) {
 		Random random = new Random(seed);
 		largeIslands = new IslandLayer(random.nextInt(), GeneratorOptions.bigOptions);
 		mediumIslands = new IslandLayer(random.nextInt(), GeneratorOptions.mediumOptions);
@@ -41,7 +35,6 @@ public class TerrainGenerator {
 		noise1 = new OpenSimplexNoise(random.nextInt());
 		noise2 = new OpenSimplexNoise(random.nextInt());
 		TERRAIN_BOOL_CACHE_MAP.clear();
-		TerrainGenerator.biomeSource = biomeSource;
 		TerrainGenerator.sampler = sampler;
 	}
 	
@@ -91,23 +84,18 @@ public class TerrainGenerator {
 	}
 	
 	private static float getAverageDepth(int x, int z) {
-		if (biomeSource == null) {
 			return 0;
 		}
-		if (getBiome(biomeSource, x, z).getTerrainHeight() < 0.1F) {
 			return 0F;
 		}
 		float depth = 0F;
 		for (int i = 0; i < OFFS.length; i++) {
 			int px = x + OFFS[i].x;
 			int pz = z + OFFS[i].y;
-			depth += getBiome(biomeSource, px, pz).getTerrainHeight() * COEF[i];
 		}
 		return depth;
 	}
 	
-	private static BCLBiome getBiome(BiomeSource biomeSource, int x, int z) {
-		return BiomeAPI.getBiome(biomeSource.getNoiseBiome(x, 0, z, sampler));
 	}
 	
 	static {

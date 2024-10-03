@@ -3,7 +3,6 @@ package ru.betterend.world.structures.features;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -36,11 +35,9 @@ public class MegaLakeStructure extends FeatureBaseStructure {
 		int y = chunkGenerator.getBaseHeight(x, z, Types.WORLD_SURFACE_WG, levelHeightAccessor);
 
 		if (y > 5) {
-			Biome biome = chunkGenerator.getNoiseBiome(x >> 2, y >> 2, z >> 2);
 
 			float radius = MHelper.randRange(32, 64, random);
 			float depth = MHelper.randRange(7, 15, random);
-			LakePiece piece = new LakePiece(new BlockPos(x, y, z), radius, depth, random, biome);
 			structurePiecesBuilder.addPiece(piece);
 		}
 

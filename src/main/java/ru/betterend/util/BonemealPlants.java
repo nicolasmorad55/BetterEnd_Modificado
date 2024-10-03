@@ -5,7 +5,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import ru.bclib.api.BonemealAPI;
 import ru.betterend.blocks.basis.EndTerrainBlock;
-import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 
 import java.util.List;
@@ -29,28 +28,21 @@ public class BonemealPlants {
 		BonemealAPI.addLandGrass(EndBlocks.SMALL_JELLYSHROOM, EndBlocks.JUNGLE_MOSS, 0.1F);
 		
 		BonemealAPI.addLandGrass(
-			EndBiomes.GLOWING_GRASSLANDS.getID(),
 			EndBlocks.BLOOMING_COOKSONIA,
 			EndBlocks.END_MOSS
 		);
-		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.VAIOLUSH_FERN, EndBlocks.END_MOSS);
-		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.FRACTURN, EndBlocks.END_MOSS);
-		BonemealAPI.addLandGrass(EndBiomes.GLOWING_GRASSLANDS.getID(), EndBlocks.SALTEAGO, EndBlocks.END_MOSS);
 		
 		BonemealAPI.addLandGrass(
-			EndBiomes.GLOWING_GRASSLANDS.getID(),
 			EndBlocks.CREEPING_MOSS,
 			EndBlocks.END_MOSS,
 			0.1F
 		);
 		BonemealAPI.addLandGrass(
-			EndBiomes.GLOWING_GRASSLANDS.getID(),
 			EndBlocks.UMBRELLA_MOSS,
 			EndBlocks.END_MOSS,
 			0.1F
 		);
 		BonemealAPI.addLandGrass(
-			EndBiomes.GLOWING_GRASSLANDS.getID(),
 			EndBlocks.TWISTED_UMBRELLA_MOSS,
 			EndBlocks.END_MOSS,
 			0.1F
@@ -61,9 +53,6 @@ public class BonemealPlants {
 		BonemealAPI.addLandGrass(EndBlocks.LUTEBUS, EndBlocks.RUTISCUS, 0.2F);
 		BonemealAPI.addLandGrass(EndBlocks.LAMELLARIUM, EndBlocks.RUTISCUS);
 		
-		BonemealAPI.addLandGrass(EndBiomes.LANTERN_WOODS.getID(), EndBlocks.AERIDIUM, EndBlocks.RUTISCUS, 0.2F);
-		BonemealAPI.addLandGrass(EndBiomes.LANTERN_WOODS.getID(), EndBlocks.LAMELLARIUM, EndBlocks.RUTISCUS);
-		BonemealAPI.addLandGrass(EndBiomes.LANTERN_WOODS.getID(), EndBlocks.BOLUX_MUSHROOM, EndBlocks.RUTISCUS, 0.05F);
 		
 		BonemealAPI.addLandGrass(
 			EndBlocks.GLOBULAGUS,

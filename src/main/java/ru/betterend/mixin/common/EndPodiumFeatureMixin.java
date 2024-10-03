@@ -73,7 +73,6 @@ public class EndPodiumFeatureMixin {
 		
 		if (be_portalPosition.getY() == 0) {
 			/*if (GeneratorOptions.useNewGenerator()) {
-				int y = TerrainGenerator.getHeight(0, 0, world.getLevel().getChunkSource().getGenerator().getBiomeSource());
 				be_portalPosition = new BlockPos(0, y, 0);
 			}
 			else {

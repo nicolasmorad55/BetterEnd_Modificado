@@ -8,11 +8,9 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 
@@ -27,11 +25,9 @@ public abstract class MountainPiece extends BasePiece {
 	protected float radius;
 	protected float height;
 	protected float r2;
-	protected ResourceLocation biomeID;
 	protected int seed1;
 	protected int seed2;
 	
-	public MountainPiece(StructurePieceType type, BlockPos center, float radius, float height, Random random, Biome biome) {
 		super(type, random.nextInt(), null);
 		this.center = center;
 		this.radius = radius;
@@ -41,7 +37,6 @@ public abstract class MountainPiece extends BasePiece {
 		this.seed2 = random.nextInt();
 		this.noise1 = new OpenSimplexNoise(this.seed1);
 		this.noise2 = new OpenSimplexNoise(this.seed2);
-		this.biomeID = BiomeAPI.getBiomeID(biome);
 		makeBoundingBox();
 	}
 	
@@ -55,7 +50,6 @@ public abstract class MountainPiece extends BasePiece {
 		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putFloat("radius", radius);
 		tag.putFloat("height", height);
-		tag.putString("biome", biomeID.toString());
 		tag.putInt("seed1", seed1);
 		tag.putInt("seed2", seed2);
 	}
@@ -65,7 +59,6 @@ public abstract class MountainPiece extends BasePiece {
 		center = NbtUtils.readBlockPos(tag.getCompound("center"));
 		radius = tag.getFloat("radius");
 		height = tag.getFloat("height");
-		biomeID = new ResourceLocation(tag.getString("biome"));
 		r2 = radius * radius;
 		seed1 = tag.getInt("seed1");
 		seed2 = tag.getInt("seed2");
@@ -80,7 +73,6 @@ public abstract class MountainPiece extends BasePiece {
 			return h;
 		}
 		
-		if (!BiomeAPI.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
 			heightmap.put(p, -10);
 			return -10;
 		}

@@ -5,7 +5,6 @@ import net.minecraft.util.Mth;
 import ru.betterend.config.Configs;
 
 public class GeneratorOptions {
-	private static int biomeSizeCaves;
 	private static boolean hasPortal;
 	private static boolean hasPillars;
 	private static boolean hasDragonFights;
@@ -27,7 +26,6 @@ public class GeneratorOptions {
 	private static int circleRadiusSqr;
 	
 	public static void init() {
-		biomeSizeCaves = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeCaves", 32);
 		hasPortal = Configs.GENERATOR_CONFIG.getBoolean("portal", "hasPortal", true);
 		hasPillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "hasSpikes", true);
 		hasDragonFights = Configs.GENERATOR_CONFIG.getBooleanRoot("hasDragonFights", true);
@@ -76,8 +74,6 @@ public class GeneratorOptions {
 		islandDistChunk = (circleRadius >> 3); // Twice bigger than normal
 	}
 	
-	public static int getBiomeSizeCaves() {
-		return Mth.clamp(biomeSizeCaves, 1, 8192);
 	}
 	
 	public static boolean hasPortal() {

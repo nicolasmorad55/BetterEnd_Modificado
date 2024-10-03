@@ -16,10 +16,7 @@ public interface BetterEndPlugin {
 	}
 	
 	/**
-	 * Additional biomes registration.
-	 * See BiomeRegistry.registerBiome for details.
 	 */
-	default void registerEndBiomes() {
 	}
 	
 	/**
@@ -32,7 +29,6 @@ public interface BetterEndPlugin {
 	public static void register(BetterEndPlugin plugin) {
 		plugin.registerAlloyingRecipes();
 		plugin.registerSmithingRecipes();
-		plugin.registerEndBiomes();
 		plugin.registerOthers();
 	}
 }

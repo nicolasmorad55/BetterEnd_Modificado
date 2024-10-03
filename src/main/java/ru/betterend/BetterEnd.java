@@ -3,9 +3,7 @@ package ru.betterend;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.biome.Biomes;
 import ru.bclib.api.WorldDataAPI;
-import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.Logger;
 import ru.betterend.api.BetterEndPlugin;
 import ru.betterend.config.Configs;
@@ -17,7 +15,6 @@ import ru.betterend.recipe.CraftingRecipes;
 import ru.betterend.recipe.FurnaceRecipes;
 import ru.betterend.recipe.InfusionRecipes;
 import ru.betterend.recipe.SmithingRecipes;
-import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlockEntities;
 import ru.betterend.registry.EndEnchantments;
 import ru.betterend.registry.EndEntities;
@@ -44,7 +41,6 @@ public class BetterEnd implements ModInitializer {
 		EndBlockEntities.register();
 		EndFeatures.register();
 		EndEntities.register();
-		EndBiomes.register();
 		EndTags.register();
 		EndEnchantments.register();
 		EndPotions.register();
@@ -63,14 +59,9 @@ public class BetterEnd implements ModInitializer {
 		Configs.saveConfigs();
 
 		if (GeneratorOptions.useNewGenerator()) {
-			ru.bclib.world.generator.GeneratorOptions.setFarEndBiomes(GeneratorOptions.getIslandDistBlock());
 			ru.bclib.world.generator.GeneratorOptions.setEndLandFunction((pos) -> TerrainGenerator.isLand(pos.x, pos.y));
 		}
 		
-		BiomeAPI.registerEndBiomeModification((biomeID, biome) -> {
-			if (!biomeID.equals(Biomes.THE_VOID.location())) {
-				EndStructures.addBiomeStructures(biomeID, biome);
-				EndFeatures.addBiomeFeatures(biomeID, biome);
 			}
 		});
 

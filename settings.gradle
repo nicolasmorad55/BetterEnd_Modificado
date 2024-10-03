@@ -44,3 +44,4 @@ if( allowLocalLibUse && (isIDE || allowLocalLibInConsoleMode)  && BCLibFolder.ex
     project(":BCLib").projectDir = BCLibFolder
     project(':BCLib').buildFileName = './bclib-composit.gradle'    
 } 
+enableFeaturePreview("VERSION_CATALOGS")

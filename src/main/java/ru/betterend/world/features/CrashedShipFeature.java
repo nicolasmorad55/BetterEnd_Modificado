@@ -24,7 +24,6 @@ import ru.bclib.util.StructureHelper;
 import ru.bclib.world.features.NBTStructureFeature;
 import ru.betterend.util.BlockFixer;
 import ru.betterend.util.StructureErode;
-import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
 
@@ -34,7 +33,6 @@ public class CrashedShipFeature extends NBTStructureFeature {
 	private StructureTemplate structure;
 
 	public CrashedShipFeature() {
-		super(EndBiome.Config.DEFAULT_MATERIAL.getTopMaterial());
 	}
 
 	@Override

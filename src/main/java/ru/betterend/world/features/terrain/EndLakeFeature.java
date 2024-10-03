@@ -17,7 +17,6 @@ import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.util.BlockFixer;
 import ru.betterend.util.GlobalState;
-import ru.betterend.world.biome.EndBiome;
 
 import java.util.Random;
 
@@ -128,7 +127,6 @@ public class EndLakeFeature extends DefaultFeature {
 								}
 								pos = POS.below();
 								if (world.getBlockState(pos).is(CommonBlockTags.GEN_END_STONES)) {
-									state = EndBiome.findTopMaterial(world, pos);
 									if (y > waterLevel + 1) BlocksHelper.setWithoutUpdate(world, pos, state);
 									else if (y > waterLevel)
 										BlocksHelper.setWithoutUpdate(
@@ -195,8 +193,6 @@ public class EndLakeFeature extends DefaultFeature {
 						// Make border
 						else if (y < waterLevel && y2 + x2 + z2 <= rb) {
 							if (world.isEmptyBlock(POS.above())) {
-								state = EndBiome.findTopMaterial(world, pos);
-//								state = world.getBiome(POS)
 //											 .getGenerationSettings()
 //											 .getSurfaceBuilderConfig()
 //											 .getTopMaterial();

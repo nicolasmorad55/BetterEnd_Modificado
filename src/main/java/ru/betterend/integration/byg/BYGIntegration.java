@@ -1,9 +1,7 @@
 package ru.betterend.integration.byg;
 
 import ru.bclib.integration.ModIntegration;
-import ru.betterend.integration.EndBiomeIntegration;
 
-public class BYGIntegration extends ModIntegration implements EndBiomeIntegration {
 	public BYGIntegration() {
 		super("byg");
 	}
@@ -16,11 +14,8 @@ public class BYGIntegration extends ModIntegration implements EndBiomeIntegratio
 		}
 		BYGBlocks.register();
 		BYGFeatures.register();
-		BYGBiomes.register();*/
 	}
 	
 	@Override
-	public void addBiomes() {
-		//BYGBiomes.addBiomes();
 	}
 }

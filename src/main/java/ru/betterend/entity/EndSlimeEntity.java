@@ -33,13 +33,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
-import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.interfaces.ISlime;
-import ru.betterend.registry.EndBiomes;
 import ru.betterend.util.GlobalState;
 
 import java.util.EnumSet;
@@ -82,14 +79,10 @@ public class EndSlimeEntity extends Slime {
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityTag) {
 		SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
-		BCLBiome biome = BiomeAPI.getFromBiome(world.getBiome(blockPosition()));
-		if (biome == EndBiomes.FOGGY_MUSHROOMLAND) {
 			this.setMossy();
 		}
-		else if (biome == EndBiomes.MEGALAKE || biome == EndBiomes.MEGALAKE_GROVE) {
 			this.setLake();
 		}
-		else if (biome == EndBiomes.AMBER_LAND) {
 			this.setAmber(true);
 		}
 		this.refreshDimensions();
@@ -216,11 +209,8 @@ public class EndSlimeEntity extends Slime {
 		if (!world.getBlockState(pos.below()).is(CommonBlockTags.END_STONES)) {
 			return false;
 		}
-		BCLBiome biome = BiomeAPI.getFromBiome(world.getBiome(pos));
-		if (biome == EndBiomes.CHORUS_FOREST || biome == EndBiomes.MEGALAKE) {
 			return true;
 		}
-		if (biome == EndBiomes.MEGALAKE_GROVE && random.nextBoolean()) {
 			return true;
 		}
 		return random.nextInt(4) == 0 && isWaterNear(world, pos);

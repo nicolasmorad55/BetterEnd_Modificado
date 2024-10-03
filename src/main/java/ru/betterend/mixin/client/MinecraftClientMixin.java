@@ -43,8 +43,6 @@ public class MinecraftClientMixin {
 					info.setReturnValue(Musics.END_BOSS);
 				}
 				else {
-					Music sound = this.level.getBiomeManager()
-											.getNoiseBiomeAtPosition(this.player.blockPosition())
 											.getBackgroundMusic()
 											.orElse(Musics.END);
 					info.setReturnValue(sound);

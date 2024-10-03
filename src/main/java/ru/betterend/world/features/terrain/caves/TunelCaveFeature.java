@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -15,14 +14,9 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.BlocksHelper;
-import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.registry.EndBiomes;
-import ru.betterend.world.biome.EndBiome;
-import ru.betterend.world.biome.cave.EndCaveBiome;
 
 import java.util.Map;
 import java.util.Optional;
@@ -119,7 +113,6 @@ public class TunelCaveFeature extends EndCaveFeature {
 			return false;
 		}
 		
-		if (biomeMissingCaves(world, pos)) {
 			return false;
 		}
 		
@@ -128,13 +121,10 @@ public class TunelCaveFeature extends EndCaveFeature {
 			return false;
 		}
 		
-		Map<EndCaveBiome, Set<BlockPos>> floorSets = Maps.newHashMap();
-		Map<EndCaveBiome, Set<BlockPos>> ceilSets = Maps.newHashMap();
 		MutableBlockPos mut = new MutableBlockPos();
 		Set<BlockPos> remove = Sets.newHashSet();
 		caveBlocks.forEach((bpos) -> {
 			mut.set(bpos);
-			EndCaveBiome bio = EndBiomes.getCaveBiome(bpos.getX(), bpos.getZ());
 			int height = world.getHeight(Types.WORLD_SURFACE, bpos.getX(), bpos.getZ());
 			if (mut.getY() >= height) {
 				remove.add(bpos);
@@ -158,7 +148,6 @@ public class TunelCaveFeature extends EndCaveFeature {
 					}
 					ceilPositions.add(mut.immutable());
 				}
-				setBiome(world, bpos, bio);
 			}
 		});
 		caveBlocks.removeAll(remove);
@@ -167,15 +156,8 @@ public class TunelCaveFeature extends EndCaveFeature {
 			return true;
 		}
 		
-		floorSets.forEach((biome, floorPositions) -> {
-			BlockState surfaceBlock = EndBiome.findTopMaterial(biome);
-			placeFloor(world, biome, floorPositions, random, surfaceBlock);
 		});
-		ceilSets.forEach((biome, ceilPositions) -> {
-			placeCeil(world, biome, ceilPositions, random);
 		});
-		EndCaveBiome biome = EndBiomes.getCaveBiome(pos.getX(), pos.getZ());
-		placeWalls(world, biome, caveBlocks, random);
 		fixBlocks(world, caveBlocks);
 		
 		return true;
@@ -187,14 +169,11 @@ public class TunelCaveFeature extends EndCaveFeature {
 	}
 	
 	@Override
-	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random, BlockState surfaceBlock) {
-		float density = biome.getFloorDensity() * 0.2F;
 		floorPositions.forEach((pos) -> {
 			if (!surfaceBlock.is(Blocks.END_STONE)) {
 				BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
 			}
 			if (density > 0 && random.nextFloat() <= density) {
-				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
 					feature.place(new FeaturePlaceContext<>(Optional.empty(), world, null, random, pos.above(), null));
 				}
@@ -203,15 +182,11 @@ public class TunelCaveFeature extends EndCaveFeature {
 	}
 	
 	@Override
-	protected void placeCeil(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> ceilPositions, Random random) {
-		float density = biome.getCeilDensity() * 0.2F;
 		ceilPositions.forEach((pos) -> {
-			BlockState ceilBlock = biome.getCeil(pos);
 			if (ceilBlock != null) {
 				BlocksHelper.setWithoutUpdate(world, pos, ceilBlock);
 			}
 			if (density > 0 && random.nextFloat() <= density) {
-				Feature<?> feature = biome.getCeilFeature(random);
 				if (feature != null) {
 					feature.place(new FeaturePlaceContext<>(Optional.empty(), world, null, random, pos.below(), null));
 				}
@@ -220,15 +195,9 @@ public class TunelCaveFeature extends EndCaveFeature {
 	}
 	
 	protected boolean hasCaves(WorldGenLevel world, BlockPos pos) {
-		return hasCavesInBiome(world, pos.offset(-8, 0, -8)) && hasCavesInBiome(
 			world,
 			pos.offset(8, 0, -8)
-		) && hasCavesInBiome(world, pos.offset(-8, 0, 8)) && hasCavesInBiome(world, pos.offset(8, 0, 8));
 	}
 	
-	protected boolean hasCavesInBiome(WorldGenLevel world, BlockPos pos) {
-		Biome biome = world.getBiome(pos);
-		BCLBiome endBiome = BiomeAPI.getFromBiome(biome);
-		return endBiome.getCustomData("has_caves", true);
 	}
 }

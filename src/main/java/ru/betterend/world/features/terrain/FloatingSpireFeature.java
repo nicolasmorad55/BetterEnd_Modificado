@@ -8,15 +8,12 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.sdf.SDF;
 import ru.bclib.sdf.operator.SDFDisplacement;
 import ru.bclib.sdf.primitive.SDFSphere;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
-import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndFeatures;
-import ru.betterend.world.biome.EndBiome;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,11 +61,8 @@ public class FloatingSpireFeature extends SpireFeature {
 				if (random.nextInt(16) == 0) {
 					support.add(info.getPos().above());
 				}
-				return EndBiome.findTopMaterial(world, info.getPos());//world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 			}
 			else if (info.getState(Direction.UP, 3).isAir()) {
-				return EndBiome.findUnderMaterial(world, info.getPos());
-//				return world.getBiome(info.getPos())
 //							.getGenerationSettings()
 //							.getSurfaceBuilderConfig()
 //							.getUnderMaterial();
@@ -78,7 +72,6 @@ public class FloatingSpireFeature extends SpireFeature {
 		sdf.fillRecursive(world, center);
 		
 		support.forEach((bpos) -> {
-			if (BiomeAPI.getFromBiome(world.getBiome(bpos)) == EndBiomes.BLOSSOMING_SPIRES) {
 				EndFeatures.TENANEA_BUSH.getFeature()
 										.place(new FeaturePlaceContext<>(Optional.empty(), world, chunkGenerator, random, bpos, null));
 			}

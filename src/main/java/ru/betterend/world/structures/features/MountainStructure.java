@@ -3,7 +3,6 @@ package ru.betterend.world.structures.features;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -34,7 +33,6 @@ public class MountainStructure extends FeatureBaseStructure {
 		int z = chunkPos.getBlockZ(MHelper.randRange(4, 12, random));
 		int y = chunkGenerator.getBaseHeight(x, z, Types.WORLD_SURFACE_WG, levelHeightAccessor);
 		if (y > 5) {
-			Biome biome = chunkGenerator.getNoiseBiome(x >> 2, y >> 2, z >> 2);
 			float radius = MHelper.randRange(50, 100, random);
 			float height = radius * MHelper.randRange(0.8F, 1.2F, random);
 			CrystalMountainPiece piece = new CrystalMountainPiece(
@@ -42,7 +40,6 @@ public class MountainStructure extends FeatureBaseStructure {
 					radius,
 					height,
 					random,
-					biome
 			);
 			structurePiecesBuilder.addPiece(piece);
 		}

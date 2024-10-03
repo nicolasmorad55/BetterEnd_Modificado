@@ -451,7 +451,6 @@ public class EternalRitual {
 		else if (targetWorld.dimension() == Level.OVERWORLD) {
 			basePos.setY(targetWorld.getChunk(basePos).getHeight(Heightmap.Types.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
 		}
-		EndFeatures.BIOME_ISLAND
 			.getPlacedFeature()
 			.place(targetWorld,
 				targetWorld.getChunkSource().getGenerator(),

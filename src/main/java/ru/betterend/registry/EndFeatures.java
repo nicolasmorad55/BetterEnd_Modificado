@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -19,12 +18,9 @@ import net.minecraft.world.level.levelgen.placement.CountPlacement;
 import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
-import ru.bclib.api.biomes.BCLBiomeBuilder;
-import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.features.BCLCommonFeatures;
 import ru.bclib.api.features.BCLFeatureBuilder;
 import ru.bclib.util.JsonFactory;
-import ru.bclib.world.biomes.BCLBiome;
 import ru.bclib.world.features.BCLFeature;
 import ru.bclib.world.features.DefaultFeature;
 import ru.bclib.world.features.ListFeature.StructureInfo;
@@ -32,9 +28,6 @@ import ru.bclib.world.features.NBTStructureFeature.TerrainMerge;
 import ru.betterend.BetterEnd;
 import ru.betterend.complexmaterials.StoneMaterial;
 import ru.betterend.config.Configs;
-import ru.betterend.world.biome.cave.EndCaveBiome;
-import ru.betterend.world.biome.land.UmbraValleyBiome;
-import ru.betterend.world.features.BiomeIslandFeature;
 import ru.betterend.world.features.BlueVineFeature;
 import ru.betterend.world.features.BuildingListFeature;
 import ru.betterend.world.features.CavePumpkinFeature;
@@ -208,7 +201,6 @@ public class EndFeatures {
 	public static final BCLFeature CHARNIA_GREEN = redisterVegetation("charnia_green", new CharniaFeature(EndBlocks.CHARNIA_GREEN), 10);
 	public static final BCLFeature MENGER_SPONGE = redisterVegetation("menger_sponge", new MengerSpongeFeature(5), 1);
 	public static final BCLFeature CHARNIA_RED_RARE = redisterVegetation("charnia_red_rare", new CharniaFeature(EndBlocks.CHARNIA_RED),2);
-	public static final BCLFeature BIOME_ISLAND = BCLFeatureBuilder.start(BetterEnd.makeID("overworld_island"), new BiomeIslandFeature()).decoration(Decoration.RAW_GENERATION).build();
 	public static final BCLFeature FLAMAEA = redisterVegetation("flamaea", new SinglePlantFeature(EndBlocks.FLAMAEA, 12, false, 5), 20);
 	
 	// Terrain //
@@ -232,7 +224,6 @@ public class EndFeatures {
 	public static final BCLFeature TUNEL_CAVE = BCLCommonFeatures.makeChunkFeature(BetterEnd.makeID("tunel_cave"), Decoration.RAW_GENERATION, new TunelCaveFeature());
 	public static final BCLFeature UMBRALITH_ARCH = registerChanced("umbralith_arch", new ArchFeature(
 		EndBlocks.UMBRALITH.stone,
-		pos -> UmbraValleyBiome.getSurface(pos.getX(), pos.getZ()).defaultBlockState()
 	), 10);
 	public static final BCLFeature THIN_UMBRALITH_ARCH = registerChanced("thin_umbralith_arch", new ThinArchFeature(EndBlocks.UMBRALITH.stone), 15);
 	
@@ -283,7 +274,6 @@ public class EndFeatures {
 	
 	private static BCLFeature redisterVegetation(String name, Feature<NoneFeatureConfiguration> feature, int density) {
 		ResourceLocation id = BetterEnd.makeID(name);
-		return BCLFeatureBuilder.start(id, feature).countLayersMax(density).onlyInBiome().build();
 	}
 	
 	private static BCLFeature registerRawGen(String name, Feature<NoneFeatureConfiguration> feature, int chance) {
@@ -312,34 +302,18 @@ public class EndFeatures {
 		return registerLayer(name, material.stone, radius, minY, maxY, count);
 	}
 	
-	public static void addBiomeFeatures(ResourceLocation id, Biome biome) {
-		BiomeAPI.addBiomeFeature(biome, FLAVOLITE_LAYER);
-		BiomeAPI.addBiomeFeature(biome, THALLASIUM_ORE);
-		BiomeAPI.addBiomeFeature(biome, ENDER_ORE);
-		BiomeAPI.addBiomeFeature(biome, CRASHED_SHIP);
 		
-		BCLBiome bclbiome = BiomeAPI.getBiome(id);
-		BCLFeature feature = getBiomeStructures(bclbiome);
 		if (feature != null) {
-			BiomeAPI.addBiomeFeature(biome, feature);
 		}
 		
 		if (id.getNamespace().equals(BetterEnd.MOD_ID)) {
 			return;
 		}
 		
-		boolean hasCaves = bclbiome.getCustomData("has_caves", true) && !(bclbiome instanceof EndCaveBiome);
-		if (hasCaves && !BiomeAPI.END_VOID_BIOME_PICKER.containsImmutable(id)) {
-			if (Configs.BIOME_CONFIG.getBoolean(id, "hasCaves", true)) {
-				BiomeAPI.addBiomeFeature(biome, ROUND_CAVE);
-				BiomeAPI.addBiomeFeature(biome, TUNEL_CAVE);
 			}
 		}
 	}
 	
-	private static BCLFeature getBiomeStructures(BCLBiome biome) {
-		String ns = biome.getID().getNamespace();
-		String nm = biome.getID().getPath();
 		ResourceLocation id = new ResourceLocation(ns, nm + "_structures");
 		
 		if (BuiltinRegistries.PLACED_FEATURE.containsKey(id)) {
@@ -348,7 +322,6 @@ public class EndFeatures {
 			return new BCLFeature(id, feature, Decoration.SURFACE_STRUCTURES, placed);
 		}
 		
-		String path = "/data/" + ns + "/structures/biome/" + nm + "/";
 		InputStream inputstream = EndFeatures.class.getResourceAsStream(path + "structures.json");
 		if (inputstream != null) {
 			JsonObject obj = JsonFactory.getJsonObject(inputstream);
@@ -375,7 +348,6 @@ public class EndFeatures {
 		return null;
 	}
 	
-	public static BCLBiomeBuilder addDefaultFeatures(BCLBiomeBuilder builder, boolean hasCaves) {
 		builder.feature(FLAVOLITE_LAYER);
 		builder.feature(THALLASIUM_ORE);
 		builder.feature(ENDER_ORE);

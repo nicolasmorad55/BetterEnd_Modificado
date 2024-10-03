@@ -5,17 +5,13 @@ import net.fabricmc.fabric.api.loot.v1.FabricLootSupplierBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.complexmaterials.WoodenComplexMaterial;
-import ru.bclib.world.biomes.BCLBiome;
 import ru.betterend.BetterEnd;
-import ru.betterend.registry.EndBiomes;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndItems;
 
@@ -92,21 +88,14 @@ public class LootTableUtil {
 		});
 	}
 	
-	public static ResourceLocation getTable(Biome biome) {
-		BCLBiome bclBiome = BiomeAPI.getBiome(biome);
-		if (bclBiome == EndBiomes.FOGGY_MUSHROOMLAND) {
 			return FOGGY_MUSHROOMLAND;
 		}
-		else if (bclBiome == EndBiomes.CHORUS_FOREST) {
 			return CHORUS_FOREST;
 		}
-		else if (bclBiome == EndBiomes.SHADOW_FOREST) {
 			return SHADOW_FOREST;
 		}
-		else if (bclBiome == EndBiomes.LANTERN_WOODS) {
 			return LANTERN_WOODS;
 		}
-		else if (bclBiome == EndBiomes.UMBRELLA_JUNGLE) {
 			return UMBRELLA_JUNGLE;
 		}
 		return COMMON;

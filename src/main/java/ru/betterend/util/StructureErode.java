@@ -12,7 +12,6 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.material.Material;
 import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.api.tag.TagAPI;
-import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 
@@ -263,7 +262,6 @@ public class StructureErode {
 			mut.setX(x);
 			for (int z = bounds.minZ(); z <= bounds.maxZ(); z++) {
 				mut.setZ(z);
-				BlockState top = BiomeAPI.findTopMaterial(world.getBiome(mut)).orElse(defaultBlock);
 				for (int y = bounds.maxY(); y >= bounds.minY(); y--) {
 					mut.setY(y);
 					BlockState state = world.getBlockState(mut);

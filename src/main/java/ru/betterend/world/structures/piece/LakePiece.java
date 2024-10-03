@@ -12,7 +12,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -21,14 +20,12 @@ import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.material.FluidState;
-import ru.bclib.api.biomes.BiomeAPI;
 import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.util.MHelper;
 import ru.betterend.noise.OpenSimplexNoise;
 import ru.betterend.registry.EndBlocks;
 import ru.betterend.registry.EndStructures;
-import ru.betterend.world.biome.EndBiome;
 
 import java.util.Map;
 import java.util.Random;
@@ -44,9 +41,7 @@ public class LakePiece extends BasePiece {
 	private float depth;
 	private int seed;
 	
-	private ResourceLocation biomeID;
 	
-	public LakePiece(BlockPos center, float radius, float depth, Random random, Biome biome) {
 		super(EndStructures.LAKE_PIECE, random.nextInt(), null);
 		this.center = center;
 		this.radius = radius;
@@ -54,7 +49,6 @@ public class LakePiece extends BasePiece {
 		this.seed = random.nextInt();
 		this.noise = new OpenSimplexNoise(this.seed);
 		this.aspect = radius / depth;
-		this.biomeID = BiomeAPI.getBiomeID(biome);
 		makeBoundingBox();
 	}
 	
@@ -69,7 +63,6 @@ public class LakePiece extends BasePiece {
 		tag.putFloat("radius", radius);
 		tag.putFloat("depth", depth);
 		tag.putInt("seed", seed);
-		tag.putString("biome", biomeID.toString());
 	}
 	
 	@Override
@@ -80,7 +73,6 @@ public class LakePiece extends BasePiece {
 		seed = tag.getInt("seed");
 		noise = new OpenSimplexNoise(seed);
 		aspect = radius / depth;
-		biomeID = new ResourceLocation(tag.getString("biome"));
 	}
 	
 	@Override
@@ -132,7 +124,6 @@ public class LakePiece extends BasePiece {
 						)) {
 							state = chunk.getBlockState(mut.above());
 							if (state.isAir()) {
-								state = random.nextBoolean() ? ENDSTONE : EndBiome.findTopMaterial(world, worldPos);
 							}
 							else {
 								state = state.getFluidState().isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.defaultBlockState();
@@ -163,7 +154,6 @@ public class LakePiece extends BasePiece {
 							
 							BlockState bState = chunk.getBlockState(mut);
 							if (bState.isAir()) {
-								bState = random.nextBoolean() ? ENDSTONE : EndBiome.findTopMaterial(world, mut.offset(sx, 0, sz));
 							}
 							else {
 								bState = bState.getFluidState().isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.defaultBlockState();
@@ -181,7 +171,6 @@ public class LakePiece extends BasePiece {
 									mut.setY(y + 1);
 									BlockState bState = chunk.getBlockState(mut);
 									if (bState.isAir()) {
-										bState = random.nextBoolean() ? ENDSTONE : EndBiome.findTopMaterial(world, mut.offset(sx, 0, sz));
 									}
 									else {
 										bState = bState.getFluidState().isEmpty() ? ENDSTONE : EndBlocks.ENDSTONE_DUST.defaultBlockState();
@@ -220,7 +209,6 @@ public class LakePiece extends BasePiece {
 			return h;
 		}
 		
-		if (!BiomeAPI.getBiomeID(world.getBiome(pos)).equals(biomeID)) {
 			heightmap.put(p, (byte) 0);
 			return 0;
 		}

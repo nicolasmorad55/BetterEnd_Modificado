@@ -14,7 +14,6 @@ import ru.bclib.api.tag.CommonBlockTags;
 import ru.bclib.util.BlocksHelper;
 import ru.bclib.world.features.DefaultFeature;
 import ru.betterend.util.BlockFixer;
-import ru.betterend.world.biome.cave.EndCaveBiome;
 
 import java.util.Optional;
 import java.util.Random;
@@ -22,10 +21,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public class CaveChunkPopulatorFeature extends DefaultFeature {
-	private Supplier<EndCaveBiome> supplier;
 	
-	public CaveChunkPopulatorFeature(Supplier<EndCaveBiome> biome) {
-		this.supplier = biome;
 	}
 	
 	@Override
@@ -40,10 +36,6 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 		MutableBlockPos min = new MutableBlockPos().set(pos);
 		MutableBlockPos max = new MutableBlockPos().set(pos);
 		fillSets(sx, sz, world.getChunk(pos), floorPositions, ceilPositions, min, max);
-		EndCaveBiome biome = supplier.get();
-		BlockState surfaceBlock = Blocks.END_STONE.defaultBlockState(); //biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-		placeFloor(world, biome, floorPositions, random, surfaceBlock);
-		placeCeil(world, biome, ceilPositions, random);
 		BlockFixer.fixBlocks(world, min, max);
 		return true;
 	}
@@ -105,12 +97,9 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 		}
 	}
 	
-	protected void placeFloor(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> floorPositions, Random random, BlockState surfaceBlock) {
-		float density = biome.getFloorDensity();
 		floorPositions.forEach((pos) -> {
 			BlocksHelper.setWithoutUpdate(world, pos, surfaceBlock);
 			if (density > 0 && random.nextFloat() <= density) {
-				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
 					feature.place(new FeaturePlaceContext<>(Optional.empty(), world, null, random, pos.above(), null));
 				}
@@ -118,15 +107,11 @@ public class CaveChunkPopulatorFeature extends DefaultFeature {
 		});
 	}
 	
-	protected void placeCeil(WorldGenLevel world, EndCaveBiome biome, Set<BlockPos> ceilPositions, Random random) {
-		float density = biome.getCeilDensity();
 		ceilPositions.forEach((pos) -> {
-			BlockState ceilBlock = biome.getCeil(pos);
 			if (ceilBlock != null) {
 				BlocksHelper.setWithoutUpdate(world, pos, ceilBlock);
 			}
 			if (density > 0 && random.nextFloat() <= density) {
-				Feature<?> feature = biome.getCeilFeature(random);
 				if (feature != null) {
 					feature.place(new FeaturePlaceContext<>(Optional.empty(), world, null, random, pos.below(), null));
 				}

@@ -1,14 +1,9 @@
-package ru.betterend.world.biome.air;
 
 import net.minecraft.world.entity.EntityType;
-import ru.bclib.api.biomes.BCLBiomeBuilder;
 import ru.betterend.registry.EndFeatures;
 import ru.betterend.registry.EndParticles;
 import ru.betterend.registry.EndStructures;
-import ru.betterend.world.biome.EndBiome;
 
-public class BiomeIceStarfield extends EndBiome.Config {
-	public BiomeIceStarfield() {
 		super("ice_starfield");
 	}
 
@@ -18,7 +13,6 @@ public class BiomeIceStarfield extends EndBiome.Config {
 	}
 
 	@Override
-	protected void addCustomBuildData(BCLBiomeBuilder builder) {
 		builder.structure(EndStructures.GIANT_ICE_STAR.getFeatureConfigured())
 			   .fogColor(224, 245, 254)
 			   .temperature(0F)
